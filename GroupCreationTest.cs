@@ -92,7 +92,7 @@ namespace webAddressbookTests
         private void GoToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();
-            driver.Navigate().GoToUrl("http://localhost/addressbook/group.php");
+            driver.Navigate().GoToUrl(baseURL + "/addressbook/group.php");
         }
 
         private void Login(AccountData account)
