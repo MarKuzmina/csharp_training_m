@@ -22,13 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="test\" />
     <None Remove="model\" />
     <None Remove="appmanager\" />
+    <None Remove="tests\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="test\" />
     <Folder Include="model\" />
     <Folder Include="appmanager\" />
+    <Folder Include="tests\" />
   </ItemGroup>
 </Project>

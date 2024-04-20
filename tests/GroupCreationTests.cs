@@ -30,7 +30,6 @@ namespace webAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-           
             app.Groups.Create(group);
            // Logout();
         }

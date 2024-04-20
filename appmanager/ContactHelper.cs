@@ -1,49 +1,32 @@
 ﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
 
 namespace webAddressbookTests
 {
-    public class TestBase
-    {  
-
-        protected ApplicationManager app;
-
-
-        [SetUp]
-        public void SetupTest()
+	public class ContactHelper : HelperBase
+	{
+		public ContactHelper(ApplicationManager manager)
+            : base(manager)
         {
-            app = new ApplicationManager();
+		}
 
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
+        public ContactHelper Create(ContactData contact)
+        {
+            InitNewContactCreation();
+            FillContactForm(contact);
+            SubmitContactCreation();
+            ReturnToContactPage();
+
+            return this;
         }
 
-        [TearDown]
-        public void TeardownTest()
-        {
-            app.Stop();
-        }
-
-        /*
-        protected void Logout()
-        {
-            driver.FindElement(By.LinkText("Logout")).Click();
-        }
-
-        //contact creation
-        protected void SubmitContactCreation()
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
 
-        protected void FillContactForm(ContactData contact)
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -90,16 +73,22 @@ namespace webAddressbookTests
             driver.FindElement(By.Name("homepage")).Click();
             driver.FindElement(By.Name("homepage")).Clear();
             driver.FindElement(By.Name("homepage")).SendKeys(contact.UrlHomepage);
+
+            return this;
         }
 
-        protected void InitNewContactCreation()
+        public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/edit.php");
-        } */
 
+            return this;
+        }
+
+        public ContactHelper ReturnToContactPage()
+        {
+            driver.FindElement(By.LinkText("home page")).Click();
+            return this;
+        }
     }
-
-    
 }
 
