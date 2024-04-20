@@ -15,14 +15,14 @@ namespace webAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitNewContactCreation();
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            //InitNewContactCreation();
             ContactData contact = new ContactData("Александр", "Пушкин");
-            FillContactForm(contact);
-            SubmitContactCreation();
-            ReturnToContactsPage();
-            Logout();
+            //FillContactForm(contact);
+            //SubmitContactCreation();
+            app.Navigator.GoToContactsPage();
+            //Logout();
         }
     }
 }

@@ -12,105 +12,32 @@ namespace webAddressbookTests
 {
     public class TestBase
     {  
-        protected IWebDriver driver;
-        private StringBuilder verificationErrors;
-        protected string baseURL;
+
+        protected ApplicationManager app;
+
 
         [SetUp]
         public void SetupTest()
         {
-            driver = new FirefoxDriver();
-            baseURL = "http://localhost";
-            verificationErrors = new StringBuilder();
+            app = new ApplicationManager();
+
+            app.Navigator.GoToHomePage();
+            app.Auth.Login(new AccountData("admin", "secret"));
         }
 
         [TearDown]
         public void TeardownTest()
         {
-            try
-            {
-                driver.Quit();
-            }
-            catch (Exception)
-            {
-                // Ignore errors if unable to close the browser
-            }
-            ClassicAssert.AreEqual("", verificationErrors.ToString());
+            app.Stop();
         }
 
-        protected void GoToHomePage()
-        {
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/index.php");
-        }
-
-        protected void Login(AccountData account)
-        {
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(account.Username);
-            driver.FindElement(By.Name("pass")).Click();
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
-            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
-        }
-
+        /*
         protected void Logout()
         {
             driver.FindElement(By.LinkText("Logout")).Click();
         }
 
-        protected void ReturnToGroupPage()
-        {
-            driver.FindElement(By.LinkText("group page")).Click();
-        }
-
-        protected void SubmitGroupCreation()
-        {
-            driver.FindElement(By.Name("submit")).Click();
-        }
-
-        protected void FillGroupForm(GroupData group)
-        {
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
-        }
-
-        protected void InitNewGroupCreation()
-        {
-            driver.FindElement(By.Name("new")).Click();
-        }
-
-        protected void GoToGroupsPage()
-        {
-            driver.FindElement(By.LinkText("groups")).Click();
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/group.php");
-        }
-
-        protected void SelectGroup(int index)
-        {
-            driver.FindElement(By.XPath("//div[@id=\'content\']/form/span[" + index + "]/input")).Click();
-        }
-
-        protected void RemoveGroup()
-        {
-            driver.FindElement(By.Name("delete")).Click();
-        }
-
         //contact creation
-
-        protected void ReturnToContactsPage()
-        {
-            driver.FindElement(By.LinkText("home page")).Click();
-            driver.Navigate().GoToUrl("http://localhost/addressbook/index.php");
-        }
-
         protected void SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -169,7 +96,7 @@ namespace webAddressbookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
             driver.Navigate().GoToUrl(baseURL + "/addressbook/edit.php");
-        }
+        } */
 
     }
 

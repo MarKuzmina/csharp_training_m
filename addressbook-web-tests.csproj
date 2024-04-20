@@ -21,4 +21,14 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="123.0.6312.8600" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="test\" />
+    <None Remove="model\" />
+    <None Remove="appmanager\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\" />
+    <Folder Include="model\" />
+    <Folder Include="appmanager\" />
+  </ItemGroup>
 </Project>
