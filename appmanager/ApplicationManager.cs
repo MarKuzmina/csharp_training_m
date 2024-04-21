@@ -16,7 +16,9 @@ namespace webAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost";
@@ -25,6 +27,28 @@ namespace webAddressbookTests
             navigationHelper = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
+        }
+
+        //деструктор
+        ~ApplicationManager()
+         {
+             try
+             {
+                 driver.Quit();
+             }
+             catch (Exception)
+             {
+                 // Ignore errors if unable to close the browser
+             }
+         }
+
+        public static ApplicationManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+            return app.Value;
         }
 
         public IWebDriver Driver

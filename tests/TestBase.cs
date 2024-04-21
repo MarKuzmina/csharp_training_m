@@ -7,28 +7,18 @@ using NUnit.Framework.Legacy;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using webAddressbookTests.tests;
 
 namespace webAddressbookTests
 {
     public class TestBase
     {  
-
         protected ApplicationManager app;
-
 
         [SetUp]
         public void SetupTest()
         {
-            app = new ApplicationManager();
-
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
-        }
-
-        [TearDown]
-        public void TeardownTest()
-        {
-            app.Stop();
+            app = ApplicationManager.GetInstance();
         }
 
         /*
