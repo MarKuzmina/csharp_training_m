@@ -23,15 +23,16 @@ namespace webAddressbookTests
 
         public ContactHelper Modify(int v, ContactData newContactData)
         {
+            int index = v + 1;
             manager.Navigator.GoToHomePage();
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+v+"]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ index +"]/td[8]/a/img")).Click();
             FillContactForm(newContactData);
             SubmitContactModification();
             ReturnToContactPage();
             return this;
         }
 
-        public ContactHelper Remove(string v)
+        public ContactHelper Remove(int v)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(v);
@@ -63,18 +64,6 @@ namespace webAddressbookTests
             Type(By.Name("email2"), contact.Email2);
             Type(By.Name("email3"), contact.Email3);
             Type(By.Name("homepage"), contact.UrlHomepage);
-            //driver.FindElement(By.Name("firstname")).Click();
-            //driver.FindElement(By.Name("firstname")).Clear();
-            //driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            //driver.FindElement(By.Name("middlename")).Click();
-            //driver.FindElement(By.Name("middlename")).Clear();
-            //driver.FindElement(By.Name("middlename")).SendKeys(contact.Middlename);
-            //driver.FindElement(By.Name("lastname")).Click();
-            //driver.FindElement(By.Name("lastname")).Clear();
-            //driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-            //driver.FindElement(By.Name("nickname")).Click();
-            //driver.FindElement(By.Name("nickname")).Clear();
-            //driver.FindElement(By.Name("nickname")).SendKeys(contact.Nickname);
             
             return this;
         }
@@ -92,11 +81,10 @@ namespace webAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact(string v)
+        public ContactHelper SelectContact(int v)
         {
-            //driver.FindElement(By.XPath("xpath=//input[@id='"+ v +"']")).Click();
-            driver.FindElement(By.Id(v)).Click();
-            //driver.FindElement(By.XPath("//input[@id=\'"+v+"\']")).Click();
+            int index = v + 1;
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td/input")).Click();
             return this;
         }
 

@@ -2,14 +2,14 @@
 namespace webAddressbookTests.tests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
             ContactData newContactData= new ContactData("newАлексадр","newПушкин");
 
-            app.Contacts.Modify(5, newContactData);
+            app.Contacts.Modify(1, newContactData);
         }
     }
 }
