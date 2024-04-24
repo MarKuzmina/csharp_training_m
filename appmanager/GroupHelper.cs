@@ -25,40 +25,21 @@ namespace webAddressbookTests
 
         public GroupHelper Modify(int v, GroupData newData)
         {
-            if (IsGroupListNotEmpty())
-            {
-                SelectGroup(v);
-                InitGroupModification();
-                FillGroupForm(newData);
-                SubmitGroupModification();
-                ReturnToGroupPage();
-            }
-            else
-            {
-                GroupData group = new GroupData("группа для модификации");
-                Create(group);
-                Modify(v, newData);
-            }
+            SelectGroup(v);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupPage();
 
             return this;
         }
 
         public GroupHelper Remove(int v)
         {
-            if (IsGroupListNotEmpty())
-            {
-                SelectGroup(v);
-                RemoveGroup();
-                ReturnToGroupPage();
-            }
-            else
-            {
-                GroupData group = new GroupData("группа для удаления");
-                group.Header = "xxx";
-                group.Footer = "vvv";
-                Create(group);
-                Remove(v);
-            }
+            SelectGroup(v);
+            RemoveGroup();
+            ReturnToGroupPage();
+            
             return this;
         }
 

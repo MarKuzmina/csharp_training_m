@@ -24,36 +24,19 @@ namespace webAddressbookTests
 
         public ContactHelper Modify(int v, ContactData newContactData)
         {
-            if (IsContacstListNotEmpty())
-            {
-                int index = v + 1;
-                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td[8]/a/img")).Click();
-                FillContactForm(newContactData);
-                SubmitContactModification();
-                ReturnToContactPage();
-            }
-            else
-            {
-                ContactData contact = new ContactData("Дмитрий", "Петрович");
-                Create(contact);
-                Modify(v,newContactData);
-            }
+            int index = v + 1;
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td[8]/a/img")).Click();
+            FillContactForm(newContactData);
+            SubmitContactModification();
+            ReturnToContactPage();
+
             return this;
         }
 
         public ContactHelper Remove(int v)
         {
-            if (IsContacstListNotEmpty())
-            {
-                SelectContact(v);
-                RemoveContact();
-            }
-            else
-            {
-                ContactData contact = new ContactData("Для удаления", "Контакт");
-                Create(contact);
-                Remove(v);
-            }
+            SelectContact(v);
+            RemoveContact();
 
             return this;
         }

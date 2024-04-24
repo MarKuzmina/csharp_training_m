@@ -23,8 +23,13 @@ namespace webAddressbookTests.tests
             newContactData.UrlHomepage = null;
             newContactData.Middlename = null;
 
+            if (! app.Contacts.IsContacstListNotEmpty())
+            {
+                ContactData contact = new ContactData("Дмитрий", "Петрович");
+                app.Contacts.Create(contact);
+            }
 
-            app.Contacts.Modify(1, newContactData);
+            app.Contacts.Modify(1, newContactData);    
         }
     }
 }

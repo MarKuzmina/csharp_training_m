@@ -11,6 +11,12 @@ namespace webAddressbookTests.tests
             newData.Header = null;
             newData.Footer = null;
 
+            if (! app.Groups.IsGroupListNotEmpty())
+            {
+                GroupData newGroup = new GroupData("группа для модификации");
+                app.Groups.Create(newGroup);
+            }
+
             app.Groups.Modify(1, newData);
         }
     }

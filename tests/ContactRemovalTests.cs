@@ -8,6 +8,12 @@ namespace webAddressbookTests.tests
         [Test]
         public void ContactRemovalTest()
         {
+            if (! app.Contacts.IsContacstListNotEmpty())
+            {
+                ContactData newContact = new ContactData("Для удаления", "Контакт");
+                app.Contacts.Create(newContact);
+            }
+
             app.Contacts.Remove(1);
         }
     }
