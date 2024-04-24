@@ -9,13 +9,12 @@ using NUnit.Framework.Legacy;
 namespace webAddressbookTests.tests
 {
     [TestFixture]
-    public class ContactCreationTests : TestBase
+    public class ContactCreationTests : AuthTestBase
     {
-
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("Дмитрий", "Петрович");
+            ContactData contact = new ContactData("Людовик", "Романов");
 
             app.Contacts.Create(contact);
             //Logout();

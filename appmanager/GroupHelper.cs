@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenQA.Selenium;
+using webAddressbookTests.tests;
 
 namespace webAddressbookTests
 {
@@ -24,24 +25,40 @@ namespace webAddressbookTests
 
         public GroupHelper Modify(int v, GroupData newData)
         {
-            manager.Navigator.GoToGroupsPage();
-            SelectGroup(v);
-            InitGroupModification();
-            FillGroupForm(newData);
-            SubmitGroupModification();
-            ReturnToGroupPage();
+            if (IsGroupListNotEmpty())
+            {
+                SelectGroup(v);
+                InitGroupModification();
+                FillGroupForm(newData);
+                SubmitGroupModification();
+                ReturnToGroupPage();
+            }
+            else
+            {
+                GroupData group = new GroupData("группа для модификации");
+                Create(group);
+                Modify(v, newData);
+            }
 
             return this;
         }
 
         public GroupHelper Remove(int v)
         {
-            manager.Navigator.GoToGroupsPage();
-
-            SelectGroup(v);
-            RemoveGroup();
-            ReturnToGroupPage();
-
+            if (IsGroupListNotEmpty())
+            {
+                SelectGroup(v);
+                RemoveGroup();
+                ReturnToGroupPage();
+            }
+            else
+            {
+                GroupData group = new GroupData("группа для удаления");
+                group.Header = "xxx";
+                group.Footer = "vvv";
+                Create(group);
+                Remove(v);
+            }
             return this;
         }
 
@@ -93,6 +110,17 @@ namespace webAddressbookTests
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
+        }
+
+        public bool IsGroupsPage()
+        {
+            return IsElementPresent(By.XPath("//h1[text()='Groups']"));
+        }
+
+        public bool IsGroupListNotEmpty()
+        {
+            manager.Navigator.GoToGroupsPage();
+            return IsElementPresent(By.XPath("//input[@type='checkbox']"));
         }
 
     }

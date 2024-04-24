@@ -10,16 +10,16 @@ namespace webAddressbookTests
         private string middlename = "";
         private string nickname = "";
         private string title = "";
-        private string company = "";
-        private string address = "";
-        private string phoneHomeNumber = "";
-        private string phoneMobileNumber = "";
-        private string phoneWorkNumber = "";
-        private string phoneFaxNumber = "";
-        private string email = "";
-        private string email2 = "";
-        private string email3 = "";
-        private string urlHomepage = "";
+        private string company = "компания";
+        private string address = "адрес проживания";
+        private string phoneHomeNumber = "999";
+        private string phoneMobileNumber = "888";
+        private string phoneWorkNumber = "777";
+        private string phoneFaxNumber = "666";
+        private string email = "test1@test.com";
+        private string email2 = "test2@test.com";
+        private string email3 = "test3@test.com";
+        private string urlHomepage = "http://homepage.test";
 
         public ContactData(string firstname, string lastname)
 		{

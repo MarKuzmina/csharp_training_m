@@ -13,6 +13,7 @@ namespace webAddressbookTests
 
         public ContactHelper Create(ContactData contact)
         {
+            manager.Navigator.GoToHomePage();
             InitNewContactCreation();
             FillContactForm(contact);
             SubmitContactCreation();
@@ -23,20 +24,36 @@ namespace webAddressbookTests
 
         public ContactHelper Modify(int v, ContactData newContactData)
         {
-            int index = v + 1;
-            manager.Navigator.GoToHomePage();
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr["+ index +"]/td[8]/a/img")).Click();
-            FillContactForm(newContactData);
-            SubmitContactModification();
-            ReturnToContactPage();
+            if (IsContacstListNotEmpty())
+            {
+                int index = v + 1;
+                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td[8]/a/img")).Click();
+                FillContactForm(newContactData);
+                SubmitContactModification();
+                ReturnToContactPage();
+            }
+            else
+            {
+                ContactData contact = new ContactData("Дмитрий", "Петрович");
+                Create(contact);
+                Modify(v,newContactData);
+            }
             return this;
         }
 
         public ContactHelper Remove(int v)
         {
-            manager.Navigator.GoToHomePage();
-            SelectContact(v);
-            RemoveContact();
+            if (IsContacstListNotEmpty())
+            {
+                SelectContact(v);
+                RemoveContact();
+            }
+            else
+            {
+                ContactData contact = new ContactData("Для удаления", "Контакт");
+                Create(contact);
+                Remove(v);
+            }
 
             return this;
         }
@@ -98,6 +115,14 @@ namespace webAddressbookTests
         {
             driver.FindElement(By.Name("update")).Click();
             return this;
+        }
+
+        public bool IsContacstListNotEmpty()
+        {
+            manager.Navigator.GoToHomePage();
+            return IsElementPresent(By.XPath("//tr[@name='entry']"));
+            //tr[@name='entry']
+            //img[@title='Edit']
         }
     }
 }
