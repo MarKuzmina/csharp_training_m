@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
+using System.Collections.Generic;
 
 namespace webAddressbookTests.tests
 {
@@ -17,8 +18,15 @@ namespace webAddressbookTests.tests
             group.Header = "bbb";
             group.Footer = "ccc";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
-            //Logout();
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            ClassicAssert.AreEqual(oldGroups, newGroups);
         }
 
         [Test]
@@ -28,8 +36,33 @@ namespace webAddressbookTests.tests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             app.Groups.Create(group);
-           // Logout();
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            ClassicAssert.AreEqual(oldGroups, newGroups); ;
+        }
+
+        [Test]
+        public void BadNameGroupCreationTest()
+        {
+            GroupData group = new GroupData("a'a");
+            group.Header = "";
+            group.Footer = "";
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Create(group);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            ClassicAssert.AreEqual(oldGroups, newGroups);
         }
     }
 }

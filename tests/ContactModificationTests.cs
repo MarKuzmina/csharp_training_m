@@ -1,4 +1,6 @@
 ﻿using System;
+using NUnit.Framework.Legacy;
+
 namespace webAddressbookTests.tests
 {
     [TestFixture]
@@ -29,8 +31,16 @@ namespace webAddressbookTests.tests
                 app.Contacts.Create(contact);
             }
 
-            app.Contacts.Modify(1, newContactData);    
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            app.Contacts.Modify(0, newContactData);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].Lastname = newContactData.Lastname;
+            oldContacts[0].Firstname = newContactData.Firstname;
+            oldContacts.Sort();
+            newContacts.Sort();
+            ClassicAssert.AreEqual(oldContacts, newContacts);
         }
     }
 }
-

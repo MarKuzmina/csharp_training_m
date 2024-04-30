@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -16,8 +17,15 @@ namespace webAddressbookTests.tests
         {
             ContactData contact = new ContactData("Людовик", "Романов");
 
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.Create(contact);
-            //Logout();
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            ClassicAssert.AreEqual(oldContacts, newContacts);
         }
     }
 }

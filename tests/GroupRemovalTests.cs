@@ -1,4 +1,6 @@
-﻿namespace webAddressbookTests.tests
+﻿using NUnit.Framework.Legacy;
+
+namespace webAddressbookTests.tests
 {
     [TestFixture]
     public class GroupRemovalTests : AuthTestBase
@@ -15,7 +17,15 @@
                 app.Groups.Create(group);
             }
 
-            app.Groups.Remove(1);
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Remove(0);
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.RemoveAt(0);
+            oldGroups.Sort();
+            newGroups.Sort();
+            ClassicAssert.AreEqual(oldGroups, newGroups);
         }
     }
 }
