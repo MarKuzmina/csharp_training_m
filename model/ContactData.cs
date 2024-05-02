@@ -3,18 +3,17 @@ using System.Xml.Linq;
 
 namespace webAddressbookTests
 {
-	public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-		private string firstname;
-        private string lastname;
+        private string allPhones;
         private string middlename = "";
         private string nickname = "";
         private string title = "";
         private string company = "компания";
-        private string address = "адрес проживания";
-        private string phoneHomeNumber = "999";
-        private string phoneMobileNumber = "888";
-        private string phoneWorkNumber = "777";
+        //private string address = "адрес проживания";
+        //private string phoneHomeNumber = "999";
+        //private string phoneMobileNumber = "888";
+        //private string phoneWorkNumber = "777";
         private string phoneFaxNumber = "666";
         private string email = "test1@test.com";
         private string email2 = "test2@test.com";
@@ -22,9 +21,9 @@ namespace webAddressbookTests
         private string urlHomepage = "http://homepage.test";
 
         public ContactData(string firstname, string lastname)
-		{
-            this.firstname = firstname;
-            this.lastname = lastname;
+        {
+            Firstname = firstname;
+            Lastname = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -40,7 +39,7 @@ namespace webAddressbookTests
             return (Firstname == other.Firstname) && (Lastname == other.Lastname);
         }
 
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
 
             return Firstname.GetHashCode() ^ Lastname.GetHashCode();
@@ -48,7 +47,7 @@ namespace webAddressbookTests
 
         public override string ToString()
         {
-            return "lastname = " + Lastname;
+            return "lastname = " + Lastname + ", fistname = " + Firstname;
         }
 
         public int CompareTo(ContactData other)
@@ -57,34 +56,26 @@ namespace webAddressbookTests
             {
                 return 1;
             }
+
+            if (Lastname == other.Lastname)
+            {
+                return Firstname.CompareTo(other.Firstname);
+            }
+
             return Lastname.CompareTo(other.Lastname);
         }
 
-        public string Firstname
-        {
-            get
-            {
-                return firstname;
-            }
-            set
+        public string Firstname { get; set; }
 
-            {
-                firstname = value;
-            }
-        }
+        public string Lastname { get; set; }
 
-        public string Lastname
-        {
-            get
-            {
-                return lastname;
-            }
-            set
+        public string Address { get; set; }
 
-            {
-                lastname = value;
-            }
-        }
+        public string PhoneHomeNumber { get; set; }
+
+        public string PhoneMobileNumber { get; set; }
+
+        public string PhoneWorkNumber { get; set; }
 
         public string Middlename
         {
@@ -135,58 +126,6 @@ namespace webAddressbookTests
 
             {
                 company = value;
-            }
-        }
-
-        public string Address
-        {
-            get
-            {
-                return address;
-            }
-            set
-
-            {
-                address = value;
-            }
-        }
-
-        public string PhoneHomeNumber
-        {
-            get
-            {
-                return phoneHomeNumber;
-            }
-            set
-
-            {
-                phoneHomeNumber = value;
-            }
-        }
-
-        public string PhoneMobileNumber
-        {
-            get
-            {
-                return phoneMobileNumber;
-            }
-            set
-
-            {
-                phoneMobileNumber = value;
-            }
-        }
-
-        public string PhoneWorkNumber
-        {
-            get
-            {
-                return phoneWorkNumber;
-            }
-            set
-
-            {
-                phoneWorkNumber = value;
             }
         }
 
@@ -256,5 +195,34 @@ namespace webAddressbookTests
         }
 
         public string Id { get; set; }
+
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(PhoneHomeNumber) + CleanUp(PhoneMobileNumber) + CleanUp(PhoneWorkNumber)).Trim();
+                }
+            }
+            set
+
+            {
+                allPhones = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\n";
+        }
     }
 }

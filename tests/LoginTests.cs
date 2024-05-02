@@ -17,7 +17,7 @@ namespace webAddressbookTests.tests
             app.Auth.Login(account);
 
 			//проверка
-            ClassicAssert.IsTrue(app.Auth.IsLoggedIn(account));
+            ClassicAssert.IsTrue(app.Auth.IsLoggedIn(account)); //проверка падает с False, но при дебагинге все отрабатывает. Возможно нужна задержка
 		}
 
         [Test]
