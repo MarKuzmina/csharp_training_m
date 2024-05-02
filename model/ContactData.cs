@@ -40,18 +40,18 @@ namespace webAddressbookTests
             return (Firstname == other.Firstname) && (Lastname == other.Lastname);
         }
 
-        public override int GetHashCode() //???
+        public override int GetHashCode() 
         {
 
             return Firstname.GetHashCode() ^ Lastname.GetHashCode();
         }
 
-        public override string ToString()//???
+        public override string ToString()
         {
             return "lastname = " + Lastname;
         }
 
-        public int CompareTo(ContactData other)//???
+        public int CompareTo(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
@@ -254,5 +254,7 @@ namespace webAddressbookTests
                 urlHomepage = value;
             }
         }
+
+        public string Id { get; set; }
     }
 }

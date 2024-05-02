@@ -44,6 +44,7 @@ namespace webAddressbookTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCashe = null;
             return this;
         }
 
@@ -71,7 +72,6 @@ namespace webAddressbookTests
         public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
-
             return this;
         }
 
@@ -91,12 +91,14 @@ namespace webAddressbookTests
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCashe = null;
             return this;
         }
 
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCashe = null;
             return this;
         }
 
@@ -104,23 +106,35 @@ namespace webAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             return IsElementPresent(By.XPath("//tr[@name='entry']"));
-            //tr[@name='entry']
-            //img[@title='Edit']
         }
+
+        private List<ContactData> contactCashe = null;
 
         public List<ContactData> GetContactList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactCashe == null)
             {
-                string fIO = element.Text;
-                string eLastname = fIO.Split(" ")[0];
-                string eFistname = fIO.Split(" ")[1];
-                contacts.Add(new ContactData(eFistname, eLastname));
+                contactCashe = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    string fIO = element.Text;
+                    string eLastname = fIO.Split(" ")[0];
+                    string eFistname = fIO.Split(" ")[1];
+                    contactCashe.Add(new ContactData(eFistname, eLastname)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                }
             }
-            return contacts;
+            
+            return new List<ContactData>(contactCashe);
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
         }
     }
 }
