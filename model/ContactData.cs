@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Xml.Linq;
+using System.Text.RegularExpressions;
 
 namespace webAddressbookTests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
-        private string middlename = "";
-        private string nickname = "";
-        private string title = "";
-        private string company = "компания";
+        private string allEmails;
+        //private string middlename = "";
+        //private string nickname = "";
+        //private string title = "";
+        //private string company = "компания";
         //private string address = "адрес проживания";
         //private string phoneHomeNumber = "999";
         //private string phoneMobileNumber = "888";
         //private string phoneWorkNumber = "777";
-        private string phoneFaxNumber = "666";
+        //private string phoneFaxNumber = "666";
         private string email = "test1@test.com";
         private string email2 = "test2@test.com";
         private string email3 = "test3@test.com";
@@ -77,70 +79,15 @@ namespace webAddressbookTests
 
         public string PhoneWorkNumber { get; set; }
 
-        public string Middlename
-        {
-            get
-            {
-                return middlename;
-            }
-            set
-
-            {
-                middlename = value;
-            }
-        }
-
-        public string Nickname
-        {
-            get
-            {
-                return nickname;
-            }
-            set
-
-            {
-                nickname = value;
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return title;
-            }
-            set
-
-            {
-                title = value;
-            }
-        }
-
-        public string Company
-        {
-            get
-            {
-                return company;
-            }
-            set
-
-            {
-                company = value;
-            }
-        }
-
-        public string PhoneFaxNumber
-        {
-            get
-            {
-                return phoneFaxNumber;
-            }
-            set
-
-            {
-                phoneFaxNumber = value;
-            }
-        }
+        public string Middlename { get; set; }
+        
+        public string Nickname { get; set; }
+        
+        public string Title { get; set; }
+        
+        public string Company { get; set; }
+        
+        public string PhoneFaxNumber { get; set; }
 
         public string Email
         {
@@ -216,13 +163,33 @@ namespace webAddressbookTests
             }
         }
 
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (Email + "\n" + Email2 + "\n" + Email3 + "\n").Trim();
+                }
+            }
+            set
+
+            {
+                allEmails = value;
+            }
+        }
+
         private string CleanUp(string phone)
         {
             if (phone == null || phone == "")
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\n";
+            return Regex.Replace(phone, "[ \\-()]", "") + "\n";
         }
     }
 }

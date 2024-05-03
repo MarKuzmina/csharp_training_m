@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Reflection;
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace webAddressbookTests
 {
@@ -147,12 +148,14 @@ namespace webAddressbookTests
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
+            string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 AllPhones = allPhones,
+                AllEmails = allEmails,
             };
         }
 
@@ -168,23 +171,37 @@ namespace webAddressbookTests
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
 
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,
                 PhoneHomeNumber = homePhone,
                 PhoneMobileNumber = mobilePhone,
-                PhoneWorkNumber = workPhone
+                PhoneWorkNumber = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
             };
         }
 
-        public ContactHelper InitContactModification(int v)
+        public void InitContactModification(int v)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (v + 2) + "]/td[8]/a/img")).Click();
-            /*driver.FindElements(By.Name("entry"))[v].
+            //driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (v + 2) + "]/td[8]/a/img")).Click();
+            driver.FindElements(By.Name("entry"))[v].
                 FindElements(By.TagName("td"))[7].
-                FindElement(By.TagName("a")).Click;*/
-            return this;
+                FindElement(By.TagName("a")).Click();
 
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return int.Parse(m.Value);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace webAddressbookTests.tests
             ClassicAssert.AreEqual(fromTable, fromForm);
             ClassicAssert.AreEqual(fromTable.Address, fromForm.Address);
             ClassicAssert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
+            ClassicAssert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
         }
 	}
 }
