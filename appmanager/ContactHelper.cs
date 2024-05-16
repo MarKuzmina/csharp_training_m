@@ -193,7 +193,7 @@ namespace webAddressbookTests
             manager.Navigator.GoToHomePage();
             InitContactShowDetails(index);
             string allDetails = driver.FindElement(By.Id("content")).Text;
-            return CleanUpDetailInformation(allDetails);
+            return allDetails;
         }
 
         //получение полных данных со страницы редактирования контакта
@@ -201,57 +201,114 @@ namespace webAddressbookTests
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(index);
-            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
-            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string midlName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
-            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value").Trim();
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value").Trim();
+            string midlName = driver.FindElement(By.Name("middlename")).GetAttribute("value").Trim();
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value").Trim();
 
-            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value").Trim();
 
-            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value").Trim();
 
-            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value").Trim();
 
-            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
-            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
-            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
-            string faxNumber = driver.FindElement(By.Name("fax")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value").Trim();
+            string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value").Trim();
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value").Trim();
+            string faxNumber = driver.FindElement(By.Name("fax")).GetAttribute("value").Trim();
 
-            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
-            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
-            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value").Trim();
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value").Trim();
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value").Trim();
 
-            string homePage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            string homePage = driver.FindElement(By.Name("homepage")).GetAttribute("value").Trim();
 
-            string details = firstName +
-                midlName +
-                lastName +
-                nickName +
-                title +
-                company +
-                address +
-                homePhone +
-                mobilePhone +
-                workPhone +
-                faxNumber +
-                email +
-                email2 +
-                email3 +
-                homePage;
-            return CleanUpDetailInformation(details);
+            ContactData contactDataEdit = new ContactData(firstName, lastName)
+            {
+                Firstname = firstName,
+                Lastname = lastName,
+                Middlename = midlName,
+                Nickname = nickName,
+                Title = title,
+                Company = company,
+                Address = address,
+                PhoneHomeNumber = homePhone,
+                PhoneMobileNumber = mobilePhone,
+                PhoneWorkNumber = workPhone,
+                PhoneFaxNumber = faxNumber,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3,
+                UrlHomepage = homePage
+            };
+
+            /*string details = firstName + " " + midlName + " " + lastName + "\n" +
+                nickName + "\n" +
+                title + "\n" +
+                company + "\n" +
+                address + "\n\n" +
+                "H: " + homePhone + "\n" +
+                "M: " + mobilePhone + "\n" +
+                "W: " + workPhone + "\n" +
+                "F: " + faxNumber + "\n\n" +
+                email + "\n" +
+                email2 + "\n" +
+                email3 + "\n" +
+                "Homepage:" + homePage;*/
+            return ConcatContactDetailInformation(contactDataEdit);
         }
 
-        //очистка детализированной информации о контакте
-        public string CleanUpDetailInformation(string details)
+        internal string ConcatContactDetailInformation(ContactData data)
         {
-            if (details == null || details == "")
+            string detailInformation = "";
+            if (data.FullName != "")
             {
-                return "";
+                detailInformation = detailInformation + data.FullName;
+            }
+            if (data.DetailInformation != "")
+            {
+                detailInformation = detailInformation + data.DetailInformation;
+            }
+            if (data.PhoneHomeNumber != "")
+            {
+                detailInformation = detailInformation + "H: " + data.PhoneHomeNumber + "\n";
+            }
+            if (data.PhoneMobileNumber != "")
+            {
+                detailInformation = detailInformation + "M: " + data.PhoneMobileNumber + "\n";
+            }
+            if (data.PhoneWorkNumber != "")
+            {
+                detailInformation = detailInformation + "W: " + data.PhoneWorkNumber + "\n";
+            }
+            if (data.PhoneFaxNumber != "")
+            {
+                detailInformation = detailInformation + "F: " + data.PhoneFaxNumber + "\n";
+            }
+            if (data.AllEmails != "")
+            {
+                detailInformation = detailInformation + "\n" + data.AllEmails + "\n";
+            }
+            if (data.UrlHomepage != "")
+            {
+                detailInformation = detailInformation + "Homepage:\n" + data.UrlHomepage;
             }
 
-            string pattern = "(W:|H:|M:|F:|Homepage:|https://|http://| |\\n)";
-            return Regex.Replace(details, pattern, "");
+            return detailInformation;
         }
+
+
+        //очистка детализированной информации о контакте
+        /* public string CleanUpDetailInformation(string details)
+         {
+             if (details == null || details == "")
+             {
+                 return "";
+             }
+
+             string pattern = "(W:|H:|M:|F:|Homepage:|https://|http://| |\\n)";
+             return Regex.Replace(details, pattern, "");
+         }*/
 
         //переход на страницу детализировнной информации о контакте
         public void InitContactShowDetails(int index) 

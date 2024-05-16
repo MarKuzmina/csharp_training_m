@@ -8,6 +8,8 @@ namespace webAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string fullName;
+        private string detailInformation;
         //private string middlename = "";
         //private string nickname = "";
         //private string title = "";
@@ -142,6 +144,44 @@ namespace webAddressbookTests
         }
 
         public string Id { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                else
+                {
+                    return (Firstname + " " + Middlename + " " + Lastname + "\n").Trim();
+                }
+            }
+            set
+            {
+                fullName = value;
+            }
+        }
+
+        public string DetailInformation
+        {
+            get
+            {
+                if (detailInformation != null)
+                {
+                    return detailInformation;
+                }
+                else
+                {
+                    return (Nickname + "\n" + Title + "\n" + Company + "\n" + Address + "\n").Trim();
+                }
+            }
+            set
+            {
+                detailInformation = value;
+            }
+        }
 
         public string AllPhones
         {
