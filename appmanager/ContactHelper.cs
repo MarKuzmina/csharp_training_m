@@ -260,43 +260,50 @@ namespace webAddressbookTests
 
         internal string ConcatContactDetailInformation(ContactData data)
         {
+            //блок 1
+            string fullNameContactInfo = "";
+            if (data.FullName != ""){ fullNameContactInfo = data.FullName + "\n"; }
+            if (data.Nickname != "") { fullNameContactInfo = fullNameContactInfo + data.Nickname + "\n"; }
+            if (data.Title != "") { fullNameContactInfo = fullNameContactInfo + data.Title + "\n"; }
+            if (data.Company != "") { fullNameContactInfo = fullNameContactInfo + data.Company + "\n"; }
+            if (data.Address != "") { fullNameContactInfo = fullNameContactInfo + data.Address + "\n"; }
+            //fullNameContactInfo = fullNameContactInfo.Trim();
+
+            //блок 2
+            string phones = "";
+            if (data.PhoneHomeNumber!="") { phones = phones + "H: " + data.PhoneHomeNumber + "\n"; }
+            if (data.PhoneMobileNumber != "") { phones = phones + "M: " + data.PhoneMobileNumber + "\n"; }
+            if (data.PhoneWorkNumber != "") { phones = phones + "W: " + data.PhoneWorkNumber + "\n"; }
+            if (data.PhoneFaxNumber != "") { phones = phones + "F: " + data.PhoneFaxNumber + "\n"; }
+            
+            //блок 3
+            string homepage = "";
+            if (data.UrlHomepage != ""){ homepage = "Homepage:\n" + data.UrlHomepage;}
+            string emailsHomepage = (data.AllEmails + "\n" + homepage).Trim();
+
+            //склеиваем все вместе
             string detailInformation = "";
-            if (data.FullName != "")
+            if (fullNameContactInfo != "")
             {
-                detailInformation = detailInformation + data.FullName;
+                detailInformation = detailInformation + fullNameContactInfo;
             }
-            if (data.DetailInformation != "")
+
+            if (detailInformation != "") { detailInformation = detailInformation + "\n"; }
+
+            if (phones != "")
             {
-                detailInformation = detailInformation + data.DetailInformation;
+                detailInformation = detailInformation + phones;
             }
-            if (data.PhoneHomeNumber != "")
+
+            if (detailInformation != "") { detailInformation = detailInformation + "\n"; }
+
+            if (emailsHomepage != "")
             {
-                detailInformation = detailInformation + "H: " + data.PhoneHomeNumber + "\n";
-            }
-            if (data.PhoneMobileNumber != "")
-            {
-                detailInformation = detailInformation + "M: " + data.PhoneMobileNumber + "\n";
-            }
-            if (data.PhoneWorkNumber != "")
-            {
-                detailInformation = detailInformation + "W: " + data.PhoneWorkNumber + "\n";
-            }
-            if (data.PhoneFaxNumber != "")
-            {
-                detailInformation = detailInformation + "F: " + data.PhoneFaxNumber + "\n";
-            }
-            if (data.AllEmails != "")
-            {
-                detailInformation = detailInformation + "\n" + data.AllEmails + "\n";
-            }
-            if (data.UrlHomepage != "")
-            {
-                detailInformation = detailInformation + "Homepage:\n" + data.UrlHomepage;
+                detailInformation = detailInformation + emailsHomepage;
             }
 
             return detailInformation;
         }
-
 
         //очистка детализированной информации о контакте
         /* public string CleanUpDetailInformation(string details)
