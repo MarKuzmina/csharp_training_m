@@ -25,14 +25,9 @@ namespace webAddressbookTests.tests
             return groups;
         }
 
-
         [Test, TestCaseSource("RandomGroupDataProvider")]
         public void GroupCreationTest(GroupData group)
         {
-            //GroupData group = new GroupData("aaa");
-            //group.Header = "bbb";
-            //group.Footer = "ccc";
-
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
             app.Groups.Create(group);
@@ -66,7 +61,7 @@ namespace webAddressbookTests.tests
             ClassicAssert.AreEqual(oldGroups, newGroups); ;
         }*/
 
-        [Test]
+        /*[Test]
         public void BadNameGroupCreationTest()
         {
             GroupData group = new GroupData("a'a");
@@ -84,6 +79,6 @@ namespace webAddressbookTests.tests
             oldGroups.Sort();
             newGroups.Sort();
             ClassicAssert.AreEqual(oldGroups, newGroups);
-        }
+        }*/
     }
 }

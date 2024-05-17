@@ -242,19 +242,6 @@ namespace webAddressbookTests
                 UrlHomepage = homePage
             };
 
-            /*string details = firstName + " " + midlName + " " + lastName + "\n" +
-                nickName + "\n" +
-                title + "\n" +
-                company + "\n" +
-                address + "\n\n" +
-                "H: " + homePhone + "\n" +
-                "M: " + mobilePhone + "\n" +
-                "W: " + workPhone + "\n" +
-                "F: " + faxNumber + "\n\n" +
-                email + "\n" +
-                email2 + "\n" +
-                email3 + "\n" +
-                "Homepage:" + homePage;*/
             return ConcatContactDetailInformation(contactDataEdit);
         }
 
@@ -267,7 +254,6 @@ namespace webAddressbookTests
             if (data.Title != "") { fullNameContactInfo = fullNameContactInfo + data.Title + "\n"; }
             if (data.Company != "") { fullNameContactInfo = fullNameContactInfo + data.Company + "\n"; }
             if (data.Address != "") { fullNameContactInfo = fullNameContactInfo + data.Address + "\n"; }
-            //fullNameContactInfo = fullNameContactInfo.Trim();
 
             //блок 2
             string phones = "";
