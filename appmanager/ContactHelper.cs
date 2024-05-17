@@ -249,7 +249,7 @@ namespace webAddressbookTests
         {
             //блок 1
             string fullNameContactInfo = "";
-            if (data.FullName != ""){ fullNameContactInfo = data.FullName + "\n"; }
+            if (data.FullName != ""){ fullNameContactInfo = Regex.Replace(data.FullName,"  ", " ") + "\n"; }
             if (data.Nickname != "") { fullNameContactInfo = fullNameContactInfo + data.Nickname + "\n"; }
             if (data.Title != "") { fullNameContactInfo = fullNameContactInfo + data.Title + "\n"; }
             if (data.Company != "") { fullNameContactInfo = fullNameContactInfo + data.Company + "\n"; }
@@ -272,16 +272,18 @@ namespace webAddressbookTests
             if (fullNameContactInfo != "")
             {
                 detailInformation = detailInformation + fullNameContactInfo;
+                if (phones == "" & emailsHomepage =="") { detailInformation = detailInformation.Trim(); }
             }
 
-            if (detailInformation != "") { detailInformation = detailInformation + "\n"; }
+            if (detailInformation != "" & phones != "") { detailInformation = detailInformation + "\n"; }
 
             if (phones != "")
             {
                 detailInformation = detailInformation + phones;
+                if (emailsHomepage == "") { detailInformation = detailInformation.Trim(); }
             }
 
-            if (detailInformation != "") { detailInformation = detailInformation + "\n"; }
+            if (detailInformation != "" & emailsHomepage != "") { detailInformation = detailInformation + "\n"; }
 
             if (emailsHomepage != "")
             {
