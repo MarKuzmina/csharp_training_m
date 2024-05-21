@@ -23,6 +23,10 @@ namespace webAddressbookTests
         private string email3 = "test3@test.com";
         private string urlHomepage = "http://homepage.test";
 
+        public ContactData()
+        {
+        }
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
@@ -50,7 +54,14 @@ namespace webAddressbookTests
 
         public override string ToString()
         {
-            return "lastname = " + Lastname + "\nfistname = " + Firstname + "\nmiddlename = " + Middlename + "\naddress = " + Address;
+            return "lastname = " + Lastname
+                + "\nfistname = " + Firstname
+                + "\nmiddlename = " + Middlename
+                + "\naddress = " + Address
+                + "\nemail = " + Email
+                + "\nemail2 = " + Email2
+                + "\nemail3 = " + Email3
+                + "\nhomepage = " + UrlHomepage;
         }
 
         public int CompareTo(ContactData other)

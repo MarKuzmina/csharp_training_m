@@ -21,6 +21,7 @@
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="123.0.6312.8600" />
     <PackageReference Include="NUnitLite" Version="4.1.0" />
     <PackageReference Include="NUnit.Console" Version="3.17.0" />
+    <PackageReference Include="Json.Net" Version="1.0.33" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,5 +33,22 @@
     <Folder Include="model\" />
     <Folder Include="appmanager\" />
     <Folder Include="tests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="groups.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="groups.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="groups.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="contacts.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="contacts.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
