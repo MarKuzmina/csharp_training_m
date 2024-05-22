@@ -7,8 +7,11 @@ using NUnit.Framework.Legacy;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using LinqToDB;
+using System.Linq;
+using LinqToDB.Data;
 
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
@@ -72,6 +75,22 @@ namespace webAddressbookTests.tests
             oldGroups.Sort();
             newGroups.Sort();
             ClassicAssert.AreEqual(oldGroups, newGroups);
+        }
+
+        [Test]
+        public void TetsDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            AddressBookDB db = new AddressBookDB();
+            List<GroupData> fromDb = (from g in db.Groups select g).ToList();
+            db.Close();
+            end = DateTime.Now;
+            Console.Out.WriteLine(end.Subtract(start));
         }
 
         /*[Test]

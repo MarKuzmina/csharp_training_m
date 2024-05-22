@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
     [SetUpFixture]
     public class TestSuiteFixture

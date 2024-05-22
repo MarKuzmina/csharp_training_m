@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework.Legacy;
 
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
     [TestFixture]
     public class GroupRemovalTests : AuthTestBase

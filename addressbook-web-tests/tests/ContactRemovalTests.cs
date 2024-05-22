@@ -2,7 +2,7 @@
 using NUnit.Framework.Legacy;
 using System.Security.Cryptography;
 
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
     [TestFixture]
     public class ContactRemovalTests : AuthTestBase

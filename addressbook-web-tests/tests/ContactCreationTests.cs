@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
     [TestFixture]
     public class ContactCreationTests : AuthTestBase

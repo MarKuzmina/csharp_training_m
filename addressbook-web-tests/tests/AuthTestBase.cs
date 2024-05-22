@@ -1,5 +1,5 @@
 ﻿using System;
-namespace webAddressbookTests.tests
+namespace webAddressbookTests
 {
 	public class AuthTestBase : TestBase
 	{
