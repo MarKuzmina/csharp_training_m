@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace webAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
@@ -79,8 +81,21 @@ namespace webAddressbookTests
             return Lastname.CompareTo(other.Lastname);
         }
 
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts select c).ToList();
+            }
+        }
+
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
         public string Address { get; set; }
@@ -152,8 +167,6 @@ namespace webAddressbookTests
                 urlHomepage = value;
             }
         }
-
-        public string Id { get; set; }
 
         public string FullName
         {

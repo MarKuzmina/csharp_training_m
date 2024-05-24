@@ -4,7 +4,7 @@ using NUnit.Framework.Legacy;
 namespace webAddressbookTests
 {
     [TestFixture]
-    public class GroupModificationTests : AuthTestBase
+    public class GroupModificationTests : GroupTestBase
     {
         [Test]
         public void GroupModificationTest()

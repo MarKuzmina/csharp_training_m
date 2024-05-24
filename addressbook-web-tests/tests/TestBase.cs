@@ -12,7 +12,9 @@ using OpenQA.Selenium.Support.UI;
 namespace webAddressbookTests
 {
     public class TestBase
-    {  
+    {
+        public static bool PERFORM_LONG_UI_CHEKS = false; //вкл. или выкл. проверки через получение данных из пользовательский интерфейс
+
         protected ApplicationManager app;
 
         [SetUp]
