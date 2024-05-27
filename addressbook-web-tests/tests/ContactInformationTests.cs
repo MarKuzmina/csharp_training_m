@@ -4,7 +4,7 @@ using NUnit.Framework.Legacy;
 namespace webAddressbookTests
 {
     [TestFixture]
-    public class ContactInformationTests : AuthTestBase
+    public class ContactInformationTests : ContactTestBase
     {
         //тест для проверки информации о контакте на главной странице
         [Test]

@@ -31,7 +31,16 @@ namespace webAddressbookTests
             FillGroupForm(newData);
             SubmitGroupModification();
             ReturnToGroupPage();
+            return this;
+        }
 
+        public GroupHelper Modify(GroupData oldGroupData, GroupData newGroupData)
+        {
+            SelectGroup(oldGroupData.Id);
+            InitGroupModification();
+            FillGroupForm(newGroupData);
+            SubmitGroupModification();
+            ReturnToGroupPage();
             return this;
         }
 
@@ -40,7 +49,6 @@ namespace webAddressbookTests
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupPage();
-            
             return this;
         }
 

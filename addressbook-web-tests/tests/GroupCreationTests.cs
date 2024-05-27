@@ -81,11 +81,13 @@ namespace webAddressbookTests
         [Test]
         public void TetsDBConnectivity()
         {
+            //из UI
             DateTime start = DateTime.Now;
             List<GroupData> fromUi = app.Groups.GetGroupList();
             DateTime end = DateTime.Now;
             Console.Out.WriteLine(end.Subtract(start));
 
+            //из DB
             start = DateTime.Now;
             List<GroupData> fromDb = GroupData.GetAll();
             end = DateTime.Now;
@@ -95,50 +97,10 @@ namespace webAddressbookTests
         [Test]
         public void TetsDBConnection()
         {
-            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            foreach (ContactData contact in GroupData.GetAll()[3].GetContacts())
             {
-                System.Console.Out.WriteLine(contact);
+                Console.Out.WriteLine(contact);
             }
         }
-
-        /*[Test]
-        public void EmptyGroupCreationTest()
-        {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
-
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-            app.Groups.Create(group);
-
-            ClassicAssert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-            ClassicAssert.AreEqual(oldGroups, newGroups); ;
-        }*/
-
-        /*[Test]
-        public void BadNameGroupCreationTest()
-        {
-            GroupData group = new GroupData("a'a");
-            group.Header = "";
-            group.Footer = "";
-
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-            app.Groups.Create(group);
-
-            ClassicAssert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-
-            List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-            ClassicAssert.AreEqual(oldGroups, newGroups);
-        }*/
     }
 }

@@ -4,15 +4,16 @@ using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace webAddressbookTests
 {
-	public class ContactHelper : HelperBase
-	{
-		public ContactHelper(ApplicationManager manager)
+    public class ContactHelper : HelperBase
+    {
+        public ContactHelper(ApplicationManager manager)
             : base(manager)
         {
-		}
+        }
 
         public ContactHelper Create(ContactData contact)
         {
@@ -36,11 +37,40 @@ namespace webAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(ContactData oldData, ContactData newContactData)
+        {
+            ClickEditLink(oldData);
+            FillContactForm(newContactData);
+            SubmitContactModification();
+            ReturnToContactPage();
+            return this;
+        }
+
+        public ContactHelper ClickEditLink(ContactData contact)
+        {
+            driver.FindElement(By.XPath("//a[contains(@href,'edit.php?id="+ contact.Id + "')]")).Click();
+            return this;
+        }
+
         public ContactHelper Remove(int v)
         {
             SelectContact(v);
             RemoveContact();
+            return this;
+        }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            SelectContact(contact.Id);
+            RemoveContact();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            manager.Navigator.GoToHomePage();
+            contactCashe = null;
             return this;
         }
 
@@ -68,7 +98,7 @@ namespace webAddressbookTests
             Type(By.Name("email2"), contact.Email2);
             Type(By.Name("email3"), contact.Email3);
             Type(By.Name("homepage"), contact.UrlHomepage);
-            
+
             return this;
         }
 
@@ -91,13 +121,16 @@ namespace webAddressbookTests
             return this;
         }
 
-        public ContactHelper RemoveContact()
+        public void SelectContact(string contactId)
         {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            manager.Navigator.GoToHomePage();
-            contactCashe = null;
-            return this;
+            driver.FindElement(By.Id(contactId)).Click();
         }
+
+        /*public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+ id +"'])")).Click();
+            return this;
+        }*/
 
         public ContactHelper SubmitContactModification()
         {
@@ -348,11 +381,6 @@ namespace webAddressbookTests
         public void SelectGroupToAdd(string groupName)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
-        }
-
-        public void SelectContact(string contactId)
-        {
-            driver.FindElement(By.Id(contactId)).Click();
         }
 
         public void ClearGroupFilter()

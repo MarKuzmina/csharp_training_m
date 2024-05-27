@@ -14,6 +14,7 @@ namespace webAddressbookTests
     public class TestBase
     {
         public static bool PERFORM_LONG_UI_CHEKS = false; //вкл. или выкл. проверки через получение данных из пользовательский интерфейс
+        public static bool PERFORM_LONG_UI_CONTACTS_CHEKS = false;
 
         protected ApplicationManager app;
 

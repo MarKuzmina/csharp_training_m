@@ -12,7 +12,7 @@ using NUnit.Framework.Legacy;
 namespace webAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -44,40 +44,20 @@ namespace webAddressbookTests
                 );
         }
 
-        [Test, TestCaseSource("ContactDataFromJsonFile")]
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
         public void ContactCreationTest(ContactData contact)
         {
-            //ContactData contact = new ContactData("Людовик", "Романов");
-
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll(); //забираем контакты из БД
 
             app.Contacts.Create(contact);
 
             ClassicAssert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
-
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            
+            List<ContactData> newContacts = ContactData.GetAll(); //забираем старые и новые контакты из БД
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
             ClassicAssert.AreEqual(oldContacts, newContacts);
         }
-
-        /*[Test]
-        public void ContactCreationTest()
-        {
-            ContactData contact = new ContactData("Людовик", "Романов");
-
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
-
-            app.Contacts.Create(contact);
-
-            ClassicAssert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
-
-            List<ContactData> newContacts = app.Contacts.GetContactList();
-            oldContacts.Add(contact);
-            oldContacts.Sort();
-            newContacts.Sort();
-            ClassicAssert.AreEqual(oldContacts, newContacts);
-        }*/
     }
 }
