@@ -7,7 +7,6 @@ using NUnit.Framework.Legacy;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-//using webAddressbookTests.tests;
 
 namespace webAddressbookTests
 {

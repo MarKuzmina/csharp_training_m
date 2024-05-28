@@ -126,12 +126,6 @@ namespace webAddressbookTests
             driver.FindElement(By.Id(contactId)).Click();
         }
 
-        /*public ContactHelper SelectContact(string id)
-        {
-            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+ id +"'])")).Click();
-            return this;
-        }*/
-
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
