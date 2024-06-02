@@ -402,6 +402,33 @@ namespace webAddressbookTests
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
+
+        public void FindPairGroupContact(out int indexG, out int indexC)
+        {
+            List<GroupData> groupsList = GroupData.GetAll();
+
+            //нужно найти подходящую группу и контакт
+            int iGroup = 0;
+            indexG = -1;
+            int iContact = 0;
+            indexC = -1;
+            while (iGroup < groupsList.Count())
+            {
+                if (groupsList[iGroup].GetContacts().Count() > 0)
+                {
+                    while (iContact < groupsList[iGroup].GetContacts().Count())
+                    {
+                        if (groupsList[iGroup].GetContacts()[iContact].GetGroups().Count() == 1)
+                        {
+                            indexC = iContact; //если контакт входит только в одну группу запоминаем его индекс
+                            indexG = iGroup;//запоминаем индекс этой группы, так как есть подходящий контакт
+                        }
+                        iContact++;
+                    }
+                }
+                iGroup++;
+            }
+        }
     }
 }
 

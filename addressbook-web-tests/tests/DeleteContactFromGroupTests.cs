@@ -9,37 +9,60 @@ namespace webAddressbookTests
         [Test]
         public void TestDeleteContactFromGroup()
 		{
-            List<GroupData> groups = GroupData.GetAll();
-
-            int i = 0;
-            int index = 0;
-            do
+            //-------1-------
+            if (ContactData.GetAll().Count() == 0) //если нет контактов, то создаем
             {
-                index = i;
-                i++;
+                ContactData newContact = new ContactData(GenerateRandomString(6), GenerateRandomString(7))
+                {
+                    Address = GenerateRandomString(30),
+                    Middlename = GenerateRandomString(5)
+                };
+                app.Contacts.Create(newContact);
             }
-            while ((groups[index].GetContacts().Count == 0) && (i < groups.Count));
-
-            if (i >= groups.Count)
+            if (GroupData.GetAll().Count() == 0)//если нет групп, то создаем
             {
-                Console.Out.WriteLine("Ни в одной группе не найдены контакты. Сначала добавьте контакт хотябы в одну группу");
+                GroupData newGroup = new GroupData(GenerateRandomString(5))
+                {
+                    Header = GenerateRandomString(20),
+                    Footer = GenerateRandomString(15)
+                };
+                app.Groups.Create(newGroup);
             }
-            else
+
+            int indexG;
+            int indexC;
+            app.Contacts.FindPairGroupContact(out indexG, out indexC);
+            List<GroupData> groupsList = GroupData.GetAll();
+            if (indexC==-1 && indexG==-1) //если нет подходящей пары, то создаем ее
             {
-                GroupData group = groups[index];
-                List<ContactData> oldListContactsInGroup = group.GetContacts();
-                ContactData deletingContactFromGroup = oldListContactsInGroup[0];
-                app.Contacts.DeleteContactFromGroup(deletingContactFromGroup, group);
+                ContactData deletedContact = ContactData.GetContactNotInGroup();//получаем первый контакт не входящий ни в одну группу
+                app.Contacts.AddContactToGroup(deletedContact, groupsList[0]);
+                List<ContactData> oldListContactsInGroup = groupsList[0].GetContacts();
+                app.Contacts.FindPairGroupContact(out indexG, out indexC);
 
+                app.Contacts.DeleteContactFromGroup(deletedContact, groupsList[0]);
 
-                List<ContactData> newListContactsInGroup = group.GetContacts();
-                oldListContactsInGroup.RemoveAt(0);
+                List<ContactData> newListContactsInGroup = groupsList[0].GetContacts();
+                oldListContactsInGroup.RemoveAt(indexC);
                 newListContactsInGroup.Sort();
                 oldListContactsInGroup.Sort();
 
                 ClassicAssert.AreEqual(oldListContactsInGroup, newListContactsInGroup);
-            } 
+            }
+            else
+            {
+                ContactData deletedContact = groupsList[indexG].GetContacts()[indexC];
+                List<ContactData> oldListContactsInGroup = groupsList[indexG].GetContacts();
+                app.Contacts.DeleteContactFromGroup(deletedContact, groupsList[indexG]);
+
+                List<ContactData> newListContactsInGroup = groupsList[indexG].GetContacts();
+                oldListContactsInGroup.RemoveAt(indexC);
+                newListContactsInGroup.Sort();
+                oldListContactsInGroup.Sort();
+
+                ClassicAssert.AreEqual(oldListContactsInGroup, newListContactsInGroup);
+            }
         }
-	}
+    }
 }
 

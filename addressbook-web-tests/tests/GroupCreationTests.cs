@@ -97,9 +97,14 @@ namespace webAddressbookTests
         [Test]
         public void TetsDBConnection()
         {
-            foreach (ContactData contact in GroupData.GetAll()[3].GetContacts())
+            //foreach (ContactData contact in GroupData.GetAll()[3].GetContacts())
+            //{
+            //   Console.Out.WriteLine(contact);
+            //}
+            
+            foreach (GroupData group in ContactData.GetAll()[0].GetGroups())
             {
-                Console.Out.WriteLine(contact);
+               Console.Out.WriteLine(group);
             }
         }
     }

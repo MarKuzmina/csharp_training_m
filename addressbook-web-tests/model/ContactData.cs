@@ -235,5 +235,25 @@ namespace webAddressbookTests
             }
             return Regex.Replace(phone, "[ \\-()]", "") + "\n";
         }
+
+        public List<GroupData> GetGroups()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups
+                        from gcr in db.GCR.Where(p => p.ContactId == Id && p.GroupId == g.Id)
+                        select g).Distinct().ToList();
+            }
+        }
+
+        public static ContactData GetContactNotInGroup()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts
+                        where !(from gcr in db.GCR select gcr.ContactId).Contains(c.Id)
+                        select c).FirstOrDefault();
+            }
+        }
     }
 }
