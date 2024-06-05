@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace mantis_tests
 {
@@ -17,6 +18,28 @@ namespace mantis_tests
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmitRegistration();
+            string url = GetConfirmationUrl(account);
+            FillPasswordForm(url, account);
+            SubmitPasswordForm();
+        }
+
+        public string GetConfirmationUrl(AccountData account)
+        {
+            string message = manager.Mail.GetLastMail(account);
+            Match match = Regex.Match(message, @"http://\S*");
+            return match.Value;
+        }
+
+        public void FillPasswordForm(string url, AccountData account)
+        {
+            driver.Url = url;
+            driver.FindElement(By.Id("password")).SendKeys(account.Password);
+            driver.FindElement(By.Id("password_confirm")).SendKeys(account.Password);
+        }
+
+        public void SubmitPasswordForm()
+        {
+            driver.FindElement(By.CssSelector("input.button"));
         }
 
         public void OpenRegistrationForm()
