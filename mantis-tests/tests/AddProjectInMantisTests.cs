@@ -10,19 +10,6 @@ namespace mantis_tests
     [TestFixture]
     public class AddProjectInMantisTests : AuthTestBase
     {
-        public static IEnumerable<ProjectData> RandomProjectDataProvider()
-        {
-            List<ProjectData> project = new List<ProjectData>();
-             for (int i = 0; i < 5; i++)
-            {
-                project.Add(new ProjectData(GenerateRandomString(7))
-                {
-                    Description = GenerateRandomString(100)
-                });
-            }
-            return project;
-        }
-
         [Test]
         public void TestAddProjectInMantis()
         {

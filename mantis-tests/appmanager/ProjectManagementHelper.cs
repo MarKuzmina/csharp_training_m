@@ -23,11 +23,11 @@ namespace mantis_test
             return this;
         }
 
-        public ProjectManagementHelper DeleteProject(int indexProject)
+        public ProjectManagementHelper DeleteProject(int index)
         {
             manager.ManagementMenu.GoToManagePage();
             manager.ManagementMenu.GoToProjectManage();
-            SelectProject(indexProject);
+            SelectProject(index+1);
             SubmitProjectDeleting();
             return this;
         }
@@ -40,7 +40,8 @@ namespace mantis_test
 
         private void SelectProject(int indexProject)
         {
-            throw new NotImplementedException();
+            //"//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr["+indexProject+"]/td/a"
+            driver.FindElement(By.XPath("//tr[" + indexProject + "]/td/a")).Click();
         }
 
         public void SubmitProjectCreation()
@@ -64,15 +65,24 @@ namespace mantis_test
             List<ProjectData> listProjects = new List<ProjectData>();
             manager.ManagementMenu.GoToManagePage();
             manager.ManagementMenu.GoToProjectManage();
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr"));
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("(//table)[1]//tbody//tr"));
             foreach (IWebElement element in elements)
             {
-                /*IList<IWebElement> cells = element.FindElement(By.TagName("td"));
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
                 string eName = cells.ElementAt(0).Text;
                 string eDescription = cells.ElementAt(4).Text;
-                listProjects.Add(new ProjectData(eName) { Description = eDescription });*/
+                listProjects.Add(new ProjectData(eName) { Description = eDescription });
             }
             return listProjects;
+        }
+
+        internal bool IsProjectListNotEmpty()
+        {
+            if (ProjectData.GetProjectsListDB().Count() > 0) 
+            { 
+                return true;
+            }
+            return false;
         }
     }
 }

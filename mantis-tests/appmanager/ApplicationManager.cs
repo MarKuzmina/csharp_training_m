@@ -31,7 +31,7 @@ namespace mantis_tests
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
             LoginH = new LoginHelper(this);
-            ManagementMenu = new ManagementMenuHelper(this);
+            ManagementMenu = new ManagementMenuHelper(this, baseURL);
             ProjectManagement = new ProjectManagementHelper(this);
         }
 
