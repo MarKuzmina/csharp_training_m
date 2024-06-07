@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 namespace mantis_tests
 {
     [TestFixture]
-    public class DeleteProjectFromMantisTests : AuthTestBase
+    public class DeleteProjectWithWebService : TestBase
     {
 
         [Test]
         public void TestDeleteProjectFromMantis()
         {
-            if (! app.ProjectManagement.IsProjectListNotEmpty())
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+            if (app.API.GetAllProjectsWebService(account).Count > 0)
             {
                 ProjectData newProject = new ProjectData()
                 {
@@ -23,12 +28,12 @@ namespace mantis_tests
                 app.ProjectManagement.CreateProject(newProject);
             }
 
-            List<ProjectData> oldProjects = ProjectData.GetProjectsListDB();
+            List<ProjectData> oldProjects = app.API.GetAllProjectsWebService(account);
             ProjectData toBeDeleted = oldProjects[0];
 
             app.ProjectManagement.DeleteProject(0);
 
-            List<ProjectData> newProjects = ProjectData.GetProjectsListDB();
+            List<ProjectData> newProjects = app.API.GetAllProjectsWebService(account);
 
             Assert.AreEqual(oldProjects.Count - 1, newProjects.Count);
 

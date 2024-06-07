@@ -10,13 +10,22 @@ namespace mantis_tests
     [Table(Name = "mantis_project_table")]
     public class ProjectData : IEquatable<ProjectData>, IComparable<ProjectData>
     {
+        [Column(Name = "id")]
+        public string Id { get; set; }
+
+        [Column(Name = "name")]
+        public string Name { get; set; }
+
+        [Column(Name = "description")]
+
+        public string Description { get; set; }
         public ProjectData()
         {
         }
-        public ProjectData(string name) 
+        /*public ProjectData(string name) 
         {
             Name = name;
-        }
+        }*/
 
         public bool Equals(ProjectData other)
         {
@@ -57,15 +66,6 @@ namespace mantis_tests
 
             return Name.CompareTo(other.Name);
         }
-
-        [Column(Name = "id")]
-        public string Id { get; set; }
-
-        [Column(Name = "name")]
-        public string Name { get; set; }
-
-        [Column(Name = "description")]
-        public string Description { get; set; }
 
         public static List<ProjectData> GetProjectsListDB()
         {

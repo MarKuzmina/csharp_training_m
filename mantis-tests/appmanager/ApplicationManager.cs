@@ -11,6 +11,7 @@ namespace mantis_tests
     {
         protected IWebDriver driver;
         protected string baseURL;
+        protected string baseURLadmin;
 
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
@@ -19,6 +20,8 @@ namespace mantis_tests
         public LoginHelper LoginH { get; set; }
         public ManagementMenuHelper ManagementMenu { get; set; }
         public ProjectManagementHelper ProjectManagement { get; set; }
+        public AdminHelper Admin { get; set; }
+        public APIHelper API { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -26,6 +29,7 @@ namespace mantis_tests
         {
             driver = new FirefoxDriver();
             baseURL = "http://localhost";
+            baseURLadmin = "http://localhost/mantisbt/mantisbt-2.26.2";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
@@ -33,6 +37,8 @@ namespace mantis_tests
             LoginH = new LoginHelper(this);
             ManagementMenu = new ManagementMenuHelper(this, baseURL);
             ProjectManagement = new ProjectManagementHelper(this);
+            Admin = new AdminHelper(this, baseURLadmin);
+            API = new APIHelper(this);
         }
 
         //деструктор

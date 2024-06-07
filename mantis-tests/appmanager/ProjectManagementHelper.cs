@@ -60,7 +60,7 @@ namespace mantis_test
             driver.FindElement(By.XPath("//button[@type = 'submit']")).Click();
         }
 
-        public List<ProjectData> GetListOfProjectsWeb()
+        public List<ProjectData> GetListOfProjectsWebBrowser()
         {
             List<ProjectData> listProjects = new List<ProjectData>();
             manager.ManagementMenu.GoToManagePage();
@@ -71,12 +71,12 @@ namespace mantis_test
                 IList<IWebElement> cells = element.FindElements(By.TagName("td"));
                 string eName = cells.ElementAt(0).Text;
                 string eDescription = cells.ElementAt(4).Text;
-                listProjects.Add(new ProjectData(eName) { Description = eDescription });
+                listProjects.Add(new ProjectData() { Name= eName, Description = eDescription });
             }
             return listProjects;
         }
 
-        internal bool IsProjectListNotEmpty()
+        public bool IsProjectListNotEmpty()
         {
             if (ProjectData.GetProjectsListDB().Count() > 0) 
             { 
