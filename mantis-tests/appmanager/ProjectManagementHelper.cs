@@ -23,11 +23,11 @@ namespace mantis_test
             return this;
         }
 
-        public ProjectManagementHelper DeleteProject(int index)
+        public ProjectManagementHelper DeleteProject(string projectName)
         {
             manager.ManagementMenu.GoToManagePage();
             manager.ManagementMenu.GoToProjectManage();
-            SelectProject(index+1);
+            SelectProject(projectName);
             SubmitProjectDeleting();
             return this;
         }
@@ -38,10 +38,12 @@ namespace mantis_test
             driver.FindElement(By.XPath("//input[@type = 'submit']")).Click();
         }
 
-        private void SelectProject(int indexProject)
+        private void SelectProject(string projectName)
         {
             //"//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr["+indexProject+"]/td/a"
-            driver.FindElement(By.XPath("//tr[" + indexProject + "]/td/a")).Click();
+            //driver.FindElement(By.XPath("//tr[" + indexProject + "]/td/a")).Click();
+            driver.FindElement(By.LinkText(projectName)).Click();
+            //By.LinkText
         }
 
         public void SubmitProjectCreation()

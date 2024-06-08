@@ -26,7 +26,7 @@ namespace mantis_tests
             List<ProjectData> oldProjects = ProjectData.GetProjectsListDB();
             ProjectData toBeDeleted = oldProjects[0];
 
-            app.ProjectManagement.DeleteProject(0);
+            app.ProjectManagement.DeleteProject(toBeDeleted.Name);
 
             List<ProjectData> newProjects = ProjectData.GetProjectsListDB();
 

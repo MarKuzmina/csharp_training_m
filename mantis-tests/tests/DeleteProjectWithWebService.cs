@@ -31,7 +31,7 @@ namespace mantis_tests
             List<ProjectData> oldProjects = app.API.GetAllProjectsWebService(account);
             ProjectData toBeDeleted = oldProjects[0];
 
-            app.ProjectManagement.DeleteProject(0);
+            app.ProjectManagement.DeleteProject(toBeDeleted.Name);
 
             List<ProjectData> newProjects = app.API.GetAllProjectsWebService(account);
 

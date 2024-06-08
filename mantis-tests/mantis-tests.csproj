@@ -46,7 +46,6 @@
     <None Update="config_inc.php">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="OpenAPIs\mantisconnect.php" ClassName="Mantis" />
   </ItemGroup>
 
 </Project>
