@@ -49,5 +49,14 @@ namespace mantis_tests
             }
             return listProjects;
         }
+
+        public void AddNewProjectWebService(AccountData account, ProjectData projectData)
+        {
+            Mantis.MantisConnectPortTypeClient client = new Mantis.MantisConnectPortTypeClient();
+            Mantis.ProjectData mantisProject = new Mantis.ProjectData();
+            mantisProject.name = projectData.Name;
+            mantisProject.description = projectData.Description;
+            client.mc_project_add(account.Name, account.Password, mantisProject);
+        }
     }
 }
