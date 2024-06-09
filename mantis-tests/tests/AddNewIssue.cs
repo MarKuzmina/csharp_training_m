@@ -18,7 +18,7 @@ namespace mantis_tests
             { Name = "administrator",
             Password = "root"};
             IssueData issueData = new IssueData()
-            { Summary = "text test",
+            { Summary = "summary test text",
             Description = "long test text",
             Category = "General"};
             List<ProjectData> projectList = ProjectData.GetProjectsListDB();

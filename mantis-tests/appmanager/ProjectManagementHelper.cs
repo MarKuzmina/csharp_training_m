@@ -42,8 +42,7 @@ namespace mantis_test
         {
             //"//div[@id='main-container']/div[2]/div[2]/div/div/div[2]/div[2]/div/div[2]/table/tbody/tr["+indexProject+"]/td/a"
             //driver.FindElement(By.XPath("//tr[" + indexProject + "]/td/a")).Click();
-            driver.FindElement(By.LinkText(projectName)).Click();
-            //By.LinkText
+            driver.FindElement(By.XPath("//tr/td/a[contains(text(), '" + projectName + "')]")).Click();
         }
 
         public void SubmitProjectCreation()
